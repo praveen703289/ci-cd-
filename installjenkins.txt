@@ -1,0 +1,142 @@
+ EC2
+instance name
+AMI-Linux kernel 5.10
+keypair
+custom tcp 8080
+launch
+connect
+sudo su -
+yum update
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install epel
+amazon-linux-extras install epel
+amazon-linux-extras install java-openjdk11
+yum install jenkins
+systemctl status jenkins //service jenkins status
+systemctl start jenkins //service jenkins start
+systemctl status jenkins
+if active=====> public IPv4 address:8080
+cat /var/lib/jenkins/secrets/initialAdminPassword
+====================================================================================================
+creating a job
+freestyle and name anything
+description
+execute shell======>
+------------------------------------
+echo "hello world" >> jenkins.txt  |
+uptime                             |
+ifconfig                           |
+------------------------------------
+apply and save
+build now
+cd <workspace_path>
+ls -la
+you can see jenkins.txt
+===============================================================================================
+git
+yum install git
+git --version
+Dashboard > Manage Jenkins > Manage plugins > Available plugins > search "github" > select > install without restart
+Dashboard > Manage Jenkins > Global tool configuration > apply & save
+=========================INSTALLING MAVEN=========================================================
+cd /opt
+wget https://dlcdn.apache.org/maven/maven-3/3.9.1/binaries/apache-maven-3.9.1-bin.tar.gz
+ls -la
+tar -xvzf <tar_file>
+mv <apache_file> maven
+cd maven
+ls -la
+cd bin
+ls -la
+./mvn
+./mvn --version
+cd
+ls -la
+.bash_profile
+vi .bash_profile
+------------------------------------
+<after fi>
+M2_HOME=/opt/maven
+M2=/opt/maven/bin
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.18.0.10-1.amzn2.0.1.x86_64 //ec2_instance
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.18.0.10-2.el8_7.x86_64 //wsl
+add :$M2:$M2_HOME:$JAVA_HOME
+save
+-------------------------------------
+sudo su -
+find / -name java-11*
+copy 1st path
+-------------------------
+echo $PATH
+source .bash_profile
+echo $PATH
+mvn --version
+install maven plugin in jenkins gui
+global tool configure
+maven
+MAVEN_HOME=/opt/maven
+add jdk
+java-11
+/usr/lib/jvm/java-11-openjdk-11.0.18.0.10-1.amzn2.0.1.x86_64
+apply and save
+==================================================================
+cd /opt
+wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.7/bin/apache-tomcat-10.1.7.tar.gz
+tar -xvzf apache-tomcat-10.1.7.tar.gz
+mv apache-tomcat-10.1.7 tomcat
+./catalina.sh start ===>Tomcat started.
+./version.sh ===>to get version.
+--------------------------------
+./startup.sh ===>to start      |
+./shutdown.sh ===>to shutdown  | ==>this is path `/opt/tomcat/bin`
+--------------------------------
+cd ~
+vi .bash_profile
+--------------------------------
+<after fi>
+TOMCAT_HOME=/opt/tomcat
+TOMCAT=/opt/tomcat/bin
+add `:$TOMCAT:$TOMCAT_HOME` to PATH
+exit
+---------------------------------
+echo $PATH
+source .bash_profile
+echo $PATH
+version.sh
+startup.sh
+shutdown.sh
+---------------------------------------------------
+!!!PROBLEM ==> jenkins and tomcat running at same port 8080
+only one service is running if started.
+Sol:
+vi /opt/tomcat/conf/server.xml
+--------------------------------
+<Connector port="xxxx".....
+...........................>
+save
+--------------------------------
+Now jenkins working at port 8080
+tomcat working at port u changed to.
+=========================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
